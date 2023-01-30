@@ -3,10 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-// O que falta:
-// extenso de numeros com parte fracionaria
-// implementar: iterador fracionario e split no "." ou ","
-// implementar função de checagem de erros
+#define MAXN 100
 
 // sistema decimal
 char unidades[10][26] = {"", "um", "dois", "tres", "quatro", "cinco", "seis", "sete", "oito", "nove"};
@@ -15,6 +12,16 @@ char dezenas[10][26] = {"","dez", "vinte", "trinta", "quarenta", "cinquenta", "s
 char centenas[10][26] = {"", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seissentos","setessentos", "oitocentos", "novecentos"};
 char conectores[][26] = {"", "mil", "mi", "bi", "tri", "quatri", "quinti", "sexti", "septi", "octi", "noni", "deci"};
 char fracionarios[][32] = {"", "dec", "centes", "miles", "miliones", "biliones"};
+
+// checagem numerica
+int check(char * string){
+    for(int i = 0; i < strlen(string); i++){
+        //printf("%d ", string[i])
+        if(string[i] < 48 || string[i] > 57)
+            if(string[i] != 44) return 0; 
+    }
+    return 1;
+}
 
 //  get a substring of a string
 char * sub(int ini, int end, char * string){
@@ -27,6 +34,32 @@ char * sub(int ini, int end, char * string){
     }
     new[c] = '\0';
     return new;
+}
+
+// função de split
+char ** split(char * string, char sep){
+    // criando lista de strings
+    char **splited = malloc(MAXN * sizeof(char *));
+
+    for(int i = 0; i < MAXN; i++){
+        splited[i] = malloc((MAXN/2 + 1) * sizeof(char));
+        *splited[i] = '\0';
+    }
+
+    int pos = 0, j = 0;
+    for(int i = 0; i < strlen(string); i++){
+        if(string[i] != sep)
+        {
+            splited[j][pos] = string[i];
+            pos+=1;
+        }else{
+            splited[j][pos] = '\0';
+            j += 1;
+            pos = 0;
+        }
+    }
+    splited[j][pos] = '\0';
+    return splited;
 }
 
 // 1 - lhao, 2 - lhoes
@@ -68,12 +101,12 @@ int nomeador(char * tripla){
     return ret;
 }
 
-// percorre as triplas
-void iterador_inteiro(char * numero, int i, int e, int triplas, int inv){
+// percorre as triplas inteiras
+void iterador(char * numero, int i, int e, int triplas, int inv){
     if(triplas == 0){   
         return;
     }
-    iterador_inteiro(numero, i, e - i, triplas - 1, inv + 1);
+    iterador(numero, i, e - i, triplas - 1, inv + 1);
 
     char * tripla = sub(e - i < 0 ? 0 : e - i, e, numero);
     int ret = nomeador(tripla);
@@ -84,9 +117,30 @@ void iterador_inteiro(char * numero, int i, int e, int triplas, int inv){
     }
 }
 
+
 int main(){
     char numero[100];
+    printf("Digite um numero (12345 | 99,93): ");
     scanf("%s", numero);
-    iterador_inteiro(numero, 3, strlen(numero), (int) ceil(strlen(numero)/3.0), 0);
+
+    char ** splited;
+    splited = split(numero, ',');
+
+    // checagem
+    if (check(splited[0]) && check(splited[1]))
+    {
+        // iteração
+        iterador(splited[0], 3, strlen(splited[0]), (int) ceil(strlen(splited[0])/3.0), 0);
+        if(strlen(splited[1]) > 0) printf("inteiros e ");
+        iterador(splited[1], 3, strlen(splited[1]), (int) ceil(strlen(splited[1])/3.0), 0);
+        if(strlen(splited[1]) > 0) printf("fracionarios");   
+    }else
+    {
+        printf("\nEscreva o numero em um formato valido!\n");
+    }
+
+    for(int i = 0; i < MAXN; i++){
+        free(splited[i]);
+    }
     return 0;
 }
