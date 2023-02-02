@@ -116,7 +116,7 @@ void iterador(char * numero, int i, int e, int triplas, int inv){
         else printf(" ");
     }
 }
-
+// 99 999 999 999 999
 
 int main(){
     char numero[100];
