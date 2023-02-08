@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /*
-DATA STRUCTURE: LIST
+DATA STRUCTURE: LISTs
 */
 
 #define MAXN 1000
@@ -37,9 +37,26 @@ int insert_end(int list[], int el)
 int isin(int list[], int el){
     int i = 0;
     while(list[i] != '\e'){
-        if(list[i] == el) return 1;
+        if(list[i++] == el) return 1;
     }
     return 0;
+}
+
+// return head
+int head(int * list)
+{
+    return list[0];
+}
+
+// return tail
+int tail(int * list)
+{
+    int i = 1, * aux = create_list();
+    while(list[i] != '\e')
+    {
+        insert_end(aux, list[i++]);
+    }
+    return aux;
 }
 
 // sort a list with bubblesort algorithm
@@ -65,6 +82,19 @@ int * copy(int * list)
     while(list[i] != '\e')
         insert_end(new, list[i++]);
     return new;
+}
+
+int * concatenate(int * list1, int * list2)
+{
+    int * aux = create_list();
+    int i = 0, k = 0;
+
+    while(list1[i] != '\e') insert_end(aux, list1[i++]);
+
+    i = 0;
+    while(list2[i] != '\e') insert_end(aux, list2[i++]);
+
+    return aux;
 }
 
 // check duplicates
@@ -95,7 +125,7 @@ int has_duplicate(int list[])
 }
 
 // print a list
-void printarr(int * list)
+void print_list(int * list)
 {
     int i = 0;
     while(list[i] != '\e'){
@@ -144,26 +174,58 @@ int remove_all(int list[], int ele)
     return 1;
 }
 
+// check a intersection of two lists
+int * intersect(int * list1, int * list2)
+{
+    int * intersect = create_list();
+    int i = 0;
+    int * aux = concatenate(list1, list2);
+
+    while(aux[i] != '\e')
+    {
+        if(isin(list1, aux[i]) && isin(list2, aux[i]))
+        {
+            if(! isin(intersect, aux[i])) insert_end(intersect, aux[i]);
+        }
+        i++;
+    }
+
+    free(aux);
+    return intersect;
+}
+
 
 int main()
 {
     int * list = create_list();
+    int list2[6] = {3, 5, 2, 8, 9, '\e'};
     int aux;
 
+    // set elements of list1
     while(scanf("%d", &aux) == 1){
         insert_end(list, aux);
     }
 
-    printf("length: %d\n", len(list));
-    printarr(list);
+    // set elements of list2
+    //while(scanf("%d", &aux) == 1){
+    //    insert_end(list2, aux);
+    //}
 
-    printf("Removing all occurences of 23:\n");
-    remove_all(list, 23);
-    printarr(list);
+    printf("length of list1: %d\n", len(list));
+    print_list(list);
 
+    //printf("Removing all occurences of 23 from list1:\n");
+    //remove_all(list, 23);
+    //printarr(list);
+
+    printf("Duplicates of list1:\n");
     has_duplicate(list);
-    printarr(list);
+
+    printf("Intersection of lists:\n");
+    int * inter = intersect(list, list2);
+    print_list(inter);
 
     free(list);
+    free(inter);
     return 0;
 }
