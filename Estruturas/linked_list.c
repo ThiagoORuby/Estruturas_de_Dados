@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// queue node
+// list node
 typedef struct qnode{
     int value;
     struct qnode * next;
 } QNode;
 
 // create
-QNode * create_queue()
+QNode * create_list()
 {
     QNode * begin = malloc(sizeof(QNode));
     begin->next = NULL;
@@ -16,9 +16,9 @@ QNode * create_queue()
 }
 
 // insert
-void push_back(QNode * queue, int value)
+void push_back(QNode * list, int value)
 {
-    QNode * temp = queue;
+    QNode * temp = list;
     while(temp->next != NULL) temp = temp->next;
     QNode * new = malloc(sizeof(QNode));
     new->value = value;
@@ -27,10 +27,10 @@ void push_back(QNode * queue, int value)
 }
 
 // len
-int len(QNode * queue)
+int len(QNode * list)
 {
     int i = 0;
-    QNode * temp = queue->next;
+    QNode * temp = list->next;
     while(temp != NULL)
     {
         i++;
@@ -40,17 +40,17 @@ int len(QNode * queue)
 }
 
 // remove
-void pop_front(QNode * queue)
+void pop_front(QNode * list)
 {
-    QNode * temp = queue->next; // temp = queue[1];
-    queue->next = temp->next; // queue[0].next = queue[1].next -> queue[2];
+    QNode * temp = list->next; // temp = list[1];
+    list->next = temp->next; // list[0].next = list[1].next -> list[2];
     free(temp);
 }
 
 // print
-void qprint(QNode * queue)
+void qprint(QNode * list)
 {
-    QNode * temp = queue->next;
+    QNode * temp = list->next;
     printf("(");
     while(temp != NULL)
     {
@@ -62,9 +62,9 @@ void qprint(QNode * queue)
 }
 
 //free
-void qfree(QNode * queue)
+void qfree(QNode * list)
 {
-    QNode * temp = queue;
+    QNode * temp = list;
     while(temp != NULL)
     {
         QNode * aux = temp;
@@ -76,19 +76,19 @@ void qfree(QNode * queue)
 int main()
 {
     int aux;
-    QNode * queue = create_queue();
+    QNode * list = create_list();
     while(scanf("%d", &aux) == 1){
-        push_back(queue, aux);
+        push_back(list, aux);
     }
 
-    int l = len(queue);
+    int l = len(list);
 
     printf("len = %d\n", l);
-    qprint(queue);
-    pop_front(queue);
-    qprint(queue);
-    pop_front(queue);
-    qprint(queue);
-    qfree(queue);
+    qprint(list);
+    pop_front(list);
+    qprint(list);
+    pop_front(list);
+    qprint(list);
+    qfree(list);
     return 0;
 }
