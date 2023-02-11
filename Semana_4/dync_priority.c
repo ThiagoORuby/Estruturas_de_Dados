@@ -1,50 +1,50 @@
-// Dynamic priority queue
+// Dynamic priority linked list
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 
-typedef struct qnode{
+typedef struct lnode{
     int priority;
     int position;
-    struct qnode * next;
-} QNode;
+    struct lnode * next;
+} LNode;
 
-// functions to priority queue
+// functions to priority linked list
 
 // create
-QNode * create_pqueue()
+LNode * create_plist()
 {
-    QNode * begin = malloc(sizeof(QNode));
+    LNode * begin = malloc(sizeof(LNode));
     begin->next = NULL;
     return begin;
 }
 
 // push_back
-void push_back(QNode * pqueue, int priority, int position)
+void push_back(LNode * plist, int priority, int position)
 {
-    QNode * temp = pqueue;
+    LNode * temp = plist;
     while(temp->next != NULL) temp = temp->next;
-    QNode * qnode = malloc(sizeof(QNode));
-    qnode->priority = priority;
-    qnode->position = position;
-    qnode->next = temp->next;
-    temp->next = qnode;
+    LNode * lnode = malloc(sizeof(LNode));
+    lnode->priority = priority;
+    lnode->position = position;
+    lnode->next = temp->next;
+    temp->next = lnode;
 }
 
 // pop
-void pop_next(QNode * position)
+void pop_next(LNode * position)
 {
-    QNode * temp = position->next;
+    LNode * temp = position->next;
     position->next = temp->next;
     free(temp);
 }
 
 // len
-int len(QNode * pqueue)
+int len(LNode * plist)
 {
     int i = 0;
-    QNode * temp = pqueue->next;
+    LNode * temp = plist->next;
     while(temp != NULL)
     {
         i++;
@@ -53,10 +53,10 @@ int len(QNode * pqueue)
     return i;
 }
 
-// qprint
-void qprint(QNode * pqueue)
+// lprint
+void lprint(LNode * plist)
 {
-    QNode * temp = pqueue->next;
+    LNode * temp = plist->next;
     while(temp != NULL)
     {
         printf("position = %d, priority = %d\n", temp->position, temp->priority);
@@ -65,9 +65,9 @@ void qprint(QNode * pqueue)
 }
 
 // find_priority
-QNode * find_priority_parent(QNode * pqueue, int priority)
+LNode * find_priority_parent(LNode * plist, int priority)
 {
-    QNode * temp = pqueue;
+    LNode * temp = plist;
     while(temp != NULL)
     {
         if(temp->next->priority == priority) break;
@@ -76,29 +76,29 @@ QNode * find_priority_parent(QNode * pqueue, int priority)
     return temp;
 }
 
-// qfree
-void qfree(QNode * pqueue)
+// lfree
+void lfree(LNode * plist)
 {
-    QNode * temp = pqueue;
+    LNode * temp = plist;
     while(temp != NULL)
     {
-        QNode * aux = temp;
+        LNode * aux = temp;
         temp = temp->next;
         free(aux);
     }
 }
 
 // sort by priority 1 1 2 2 3
-QNode * sort_priority(QNode * pqueue, int count1, int count2, int count3)
+LNode * sort_priority(LNode * plist, int count1, int count2, int count3)
 {
-    QNode * sorted = create_pqueue();
-    while(len(pqueue) != 0)
+    LNode * sorted = create_plist();
+    while(len(plist) != 0)
     {
         for(int i = 0; i < 2; i++) // priority 1
         {
             if(count1 > 0)
             {
-                QNode * temp = find_priority_parent(pqueue, 1);
+                LNode * temp = find_priority_parent(plist, 1);
                 push_back(sorted, temp->next->priority, temp->next->position);
                 pop_next(temp);
                 count1--;
@@ -108,7 +108,7 @@ QNode * sort_priority(QNode * pqueue, int count1, int count2, int count3)
         {
             if(count2 > 0)
             {
-                QNode * temp = find_priority_parent(pqueue, 2);
+                LNode * temp = find_priority_parent(plist, 2);
                 push_back(sorted, temp->next->priority, temp->next->position);
                 pop_next(temp);
                 count2--;
@@ -117,7 +117,7 @@ QNode * sort_priority(QNode * pqueue, int count1, int count2, int count3)
         }
         if(count3 > 0)
         {
-            QNode * temp = find_priority_parent(pqueue, 3);
+            LNode * temp = find_priority_parent(plist, 3);
             push_back(sorted, temp->next->priority, temp->next->position);
             pop_next(temp);
             count3--;
@@ -129,25 +129,30 @@ QNode * sort_priority(QNode * pqueue, int count1, int count2, int count3)
 int main()
 {
     int aux, i = 0, count1 = 0, count2 = 0, count3 = 0;
-    QNode * pqueue = create_pqueue();
+    LNode * plist = create_plist();
 
     while(scanf("%d", &aux) == 1)
     {
-        push_back(pqueue, aux, i);
+        if(aux < 1 || aux > 3)
+        {
+            printf("The Priority is a number in the range [1,3]! Try again:\n");
+            continue;
+        }
+        push_back(plist, aux, i);
         if(aux == 1) count1++;
         if(aux == 2) count2++;
         if(aux == 3) count3++;
         i++;
     }
 
-    qprint(pqueue);
+    lprint(plist);
     time_t init = time(NULL);
-    QNode * sorted = sort_priority(pqueue, count1, count2, count3);
+    LNode * sorted = sort_priority(plist, count1, count2, count3);
     printf("\ntime: %f seconds\n", time(NULL) - init);
     printf("\n");
-    qprint(sorted);
+    lprint(sorted);
 
-    qfree(pqueue);
-    qfree(sorted);
+    lfree(plist);
+    lfree(sorted);
     return 0;
 }

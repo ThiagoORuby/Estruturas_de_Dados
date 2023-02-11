@@ -14,7 +14,7 @@ PriorityNode * create_plist(int size)
 {
     PriorityNode * plist = malloc(sizeof(PriorityNode) * size);
     PriorityNode end;
-    end.position = '~';
+    end.position = -100;
     plist[0] = end;
     return plist;
 }
@@ -23,7 +23,7 @@ PriorityNode * create_plist(int size)
 int len(PriorityNode * plist)
 {
     int i = 0;
-    while(plist[i].position != '~') i++;
+    while(plist[i].position != -100) i++;
     return i;
 }
 
@@ -31,7 +31,7 @@ int len(PriorityNode * plist)
 int find_priority(PriorityNode * plist, int priority)
 {
     int i = 0;
-    while(plist[i].position != '~')
+    while(plist[i].position != -100)
     {
         if(plist[i].priority == priority) return i;
         i++;
@@ -42,7 +42,7 @@ int find_priority(PriorityNode * plist, int priority)
 void insert(PriorityNode * plist, PriorityNode node)
 {
     int i = 0;
-    while(plist[i].position != '~') i++;
+    while(plist[i].position != -100) i++;
     plist[i + 1] = plist[i];
     plist[i] = node;
 }
@@ -50,7 +50,7 @@ void insert(PriorityNode * plist, PriorityNode node)
 // drop a element by a position
 void pop(PriorityNode * plist, int pos)
 {
-    while(plist[pos].position != '~')
+    while(plist[pos].position != -100)
     {
         plist[pos].position = plist[pos+1].position;
         plist[pos].priority = plist[pos+1].priority;
@@ -62,7 +62,7 @@ void pop(PriorityNode * plist, int pos)
 void print_plist(PriorityNode * plist)
 {
     int i = 0;
-    while(plist[i].position != '~'){
+    while(plist[i].position != -100){
         printf("position: %d priority: %d\n", plist[i].position, plist[i].priority);
         i++;
     }
