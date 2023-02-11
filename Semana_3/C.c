@@ -10,8 +10,12 @@ int fatorial(int n)
 int main()
 {
     int n, fat;
+
+    printf("##### ENCONTRANDO O FATORIAL #####\n");
+    printf("Digite um numero: ");
     scanf("%d", &n);
+
     fat = fatorial(n);
-    printf("O fatorial de %d eh %d", n, fat);
+    printf("O fatorial de %d eh %d\n", n, fat);
     return 0;
 }

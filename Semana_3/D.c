@@ -10,6 +10,9 @@ int fibonacci(int n)
 int main()
 {
     int n, fib;
+
+    printf("##### SEQUENCIA DE FIBONACCI #####\n");
+    printf("Digite a posicao do elemento que deseja ver: ");
     scanf("%d", &n);
 
     fib = fibonacci(n);
