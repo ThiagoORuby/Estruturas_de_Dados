@@ -2,35 +2,35 @@
 #include <stdlib.h>
 
 // list node
-typedef struct qnode{
+typedef struct lnode{
     int value;
-    struct qnode * next;
-} QNode;
+    struct lnode * next;
+} LNode;
 
 // create
-QNode * create_list()
+LNode * create_list()
 {
-    QNode * begin = malloc(sizeof(QNode));
+    LNode * begin = malloc(sizeof(LNode));
     begin->next = NULL;
     return begin;
 }
 
 // insert
-void push_back(QNode * list, int value)
+void push_back(LNode * list, int value)
 {
-    QNode * temp = list;
+    LNode * temp = list;
     while(temp->next != NULL) temp = temp->next;
-    QNode * new = malloc(sizeof(QNode));
+    LNode * new = malloc(sizeof(LNode));
     new->value = value;
     new->next = NULL;
     temp->next = new;
 }
 
 // len
-int len(QNode * list)
+int len(LNode * list)
 {
     int i = 0;
-    QNode * temp = list->next;
+    LNode * temp = list->next;
     while(temp != NULL)
     {
         i++;
@@ -40,17 +40,17 @@ int len(QNode * list)
 }
 
 // remove
-void pop_front(QNode * list)
+void pop_front(LNode * list)
 {
-    QNode * temp = list->next; // temp = list[1];
+    LNode * temp = list->next; // temp = list[1];
     list->next = temp->next; // list[0].next = list[1].next -> list[2];
     free(temp);
 }
 
 // print
-void qprint(QNode * list)
+void qprint(LNode * list)
 {
-    QNode * temp = list->next;
+    LNode * temp = list->next;
     printf("(");
     while(temp != NULL)
     {
@@ -62,12 +62,12 @@ void qprint(QNode * list)
 }
 
 //free
-void qfree(QNode * list)
+void qfree(LNode * list)
 {
-    QNode * temp = list;
+    LNode * temp = list;
     while(temp != NULL)
     {
-        QNode * aux = temp;
+        LNode * aux = temp;
         temp = temp->next;
         free(aux);
     }
@@ -76,7 +76,7 @@ void qfree(QNode * list)
 int main()
 {
     int aux;
-    QNode * list = create_list();
+    LNode * list = create_list();
     while(scanf("%d", &aux) == 1){
         push_back(list, aux);
     }
