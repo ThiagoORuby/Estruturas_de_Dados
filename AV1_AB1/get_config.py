@@ -7,11 +7,13 @@ dict_name = {keys[i] : values[i] for i in range(len(keys))}
 print(dict_name)
 
 group_names = [
-    "Diogo Tallys Mota Amorim",
+    "Diogo Tallys da Mota Amorim",
     "José Endson Santos",
     "Taisa Lima Silva",
     "Thiago Ribeiro Silva",
-    "Hugo Coelho Silva"
+    "Hugo Coelho da Silva",
+    "Diogo Travis Scott",
+    "Diogo Mota Mota Amorim"
 ]
 
 options = [
