@@ -73,6 +73,30 @@ int empty(SNode * stack)
     return 0;
 }
 
+// sort
+
+// union
+SNode * concatenate(SNode * stack1, SNode * stack2)
+{
+    SNode * temp = stack1;
+    while(temp->next != NULL) temp = temp->next;
+    temp->next = stack2->next;
+    return stack1;
+}
+
+// invert
+SNode * invert(SNode * stack)
+{
+    SNode * inverse = create_stack();
+    SNode * temp = stack->next;
+    while(temp != NULL)
+    {
+        push(inverse, temp->value);
+        temp = temp->next;
+    }
+    return inverse;
+}
+
 // sfree
 void sfree(SNode * stack)
 {
@@ -98,12 +122,14 @@ int main()
 
     printf("\nLen = %d\n", len(stack));
     sprint(stack);
-    pop(stack);
+    //pop(stack);
     pop(stack);
     sprint(stack);
     printf("top = %d\n", top(stack));
-    printf("Is empty? %s", empty(stack) ? "Yes" : "No");
-
+    printf("Is empty? %s\n", empty(stack) ? "Yes" : "No");
+    sprint(stack);
+    printf("Inverse Stack: ");
+    sprint(invert(stack));
     sfree(stack);
     return 0;
 }
