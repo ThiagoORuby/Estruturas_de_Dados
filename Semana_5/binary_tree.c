@@ -64,14 +64,22 @@ int main()
     (root->right->right)->right = create_node('I');
 
     // tree exemple 2
-    // 2 * 3 + 5 - 4
+    // 4 * 3 + 2 + 3 + 2 - 5
     Node * root2 = create_node('+');
     root2->left = create_node('*');
     root2->right = create_node('-');
     root2->left->left = create_node('2');
     root2->left->right = create_node('3');
-    root2->right->left = create_node('5');
-    root2->right->right = create_node('4');
+    root2->right->left = create_node('/');
+    root2->right->right = create_node('8');
+    (root2->right->left)->left = create_node('6');
+    (root2->right->left)->right = create_node('4');
+    /*root2->right->left = create_node('+');
+    root2->right->right = create_node('5');
+    (root2->left->left)->left = create_node('4'); 
+    (root2->left->left)->right = create_node('3'); 
+    (root2->right->left)->left = create_node('3'); 
+    (root2->right->left)->right = create_node('2'); */
 
     Node * trees[2] = {root, root2};
 

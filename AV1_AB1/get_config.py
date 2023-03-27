@@ -13,7 +13,8 @@ group_names = [
     "Thiago Ribeiro Silva",
     "Hugo Coelho da Silva",
     "Diogo Travis Scott",
-    "Diogo Mota Mota Amorim"
+    "Diogo Mota Mota Amorim",
+    "Caio Mascarenhas Soares"
 ]
 
 options = [

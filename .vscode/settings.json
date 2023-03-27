@@ -1,6 +1,10 @@
 {
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
-        "d.C": "cpp"
+        "d.C": "cpp",
+        "system_error": "c",
+        "type_traits": "c",
+        "xlocnum": "c",
+        "xtr1common": "c"
     }
 }
