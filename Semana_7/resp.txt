@@ -1,0 +1,97 @@
+// DE TRAS PRA FRENTE
+/*void inorder_to_preorder(char * exp, Stack * num_stack, Stack * op_stack)
+{
+    int i = strlen(exp) - 1, num;
+    char pre[100] = "\0", temp[20] = "\0";
+    while(i >= 0)
+    {
+        num = get_num_inv(exp, &i);
+        push(num_stack, num);
+        printf("num_stack add %d\n", num);
+        //if(i >= strlen(exp)) break;
+        strcpy(temp, "\0");
+        while(!empty(op_stack) && check_priority(top(op_stack), exp[i]))
+        {
+            printf("Find a priority!\n");
+            printf("exp[i] = %c\n", exp[i]);
+            int count = 0;
+            while(!empty(num_stack))
+            {
+                if(count == 2) break;
+                // add 2 first nums
+                strcati(temp, pop(num_stack), 0);
+                count++;
+            }
+            strcatc(temp, popc(op_stack), 1);
+        }
+        printf("temmp: %s\n", temp);
+        strcats(pre, temp);
+        if(i > strlen(exp) - 1) break;
+        push(op_stack, exp[i]);
+        printf("op_stack add %c\n", top(op_stack));
+        i--;
+    }
+
+    printf("add the rest\n");
+    // add other elements in stacks
+    while(1)
+    {
+        if(!empty(num_stack))
+        {
+            strcati(pre, pop(num_stack), 0);
+        }
+         if(!empty(op_stack))
+        {
+            strcatc(pre, popc(op_stack), 1);
+            continue;
+        }
+        break;
+    }
+    printf("%s", pre);
+    printf("\n");
+}
+void inorder_to_postorder(char * exp, Stack * num_stack, Stack * op_stack)
+{
+    int i = 0, num;
+    char pre[100], temp[20] = "\0";
+    while(i < strlen(exp))
+    {
+        if(isdigit(exp[i]))
+        {
+            num = get_num(exp, &i);
+            push(num_stack, num);
+            printf("num_stack add %d\n", num);
+        }
+        else
+        {
+            strcpy(temp, "\0");
+            while(!empty(op_stack) && check_priority(top(op_stack), exp[i]))
+            {
+                printf("Find a priority!\n");
+                int count = 0;
+                while(!empty(num_stack))
+                {
+                    if(count == 2) break;
+                    // add 2 first nums
+                    strcati(temp, pop(num_stack), 1);
+                    count++;
+                }
+                strcatc(temp, popc(op_stack), 0);
+            }
+            printf("temmp: %s\n", temp);
+            strcat(pre, temp);
+            //if(i > strlen(exp) - 1) break;
+            push(op_stack, exp[i]);
+            printf("op_stack add %c\n", top(op_stack));
+            i++;
+        }
+    }
+
+    // add other elements in stacks
+    while(!empty(num_stack)) strcati(pre, pop(num_stack), 0);
+
+    while(!empty(op_stack)) strcatc(pre, popc(op_stack), 0);
+    
+    printf("%s", pre);
+    printf("\n");
+}*/
