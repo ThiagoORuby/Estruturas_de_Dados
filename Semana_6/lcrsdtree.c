@@ -72,7 +72,6 @@ void insert(Node * root, char value, char parent)
         finded->lchild = new;
         return;
     }
-    printf("to aqui\n");
     finded = finded->lchild;
 
     while(finded->rsibling != NULL)
@@ -106,6 +105,7 @@ void remove_node(Node * root, char value)
     {
         temp = finded->lchild;
         finded->lchild = temp->rsibling;
+        temp->rsibling = NULL;
     }
     else
     {
@@ -157,7 +157,7 @@ int isequal(Node * root1, Node * root2)
         child2 = child2->rsibling;
     }
 
-    if(child1 != NULL || child2 != NULL) return 0;
+    if(child1 != NULL || child2 != NULL) return 0; // deixar comentado se for subset
     return 1;
 }
 
@@ -206,27 +206,59 @@ int union_trees(Node * root1, Node * root2)
 }
 
 // intersect
+Node * intersect(Node * root1, Node * root2)
+{
+    Node * node_int = create_node(root1->value);
+    Node * child = root1->lchild;
+    while(child != NULL)
+    {
+        //printf("finded %c: %d\n", child->value, !(find(root2, child->value) == NULL));
+        if(find(root2, child->value) != NULL)
+        {
+            Node * child_int = intersect(child, root2);
+            insert(node_int, child_int->value, node_int->value);
+        }
+        child = intersect(child->lchild, root2);
+        child = child->rsibling;
+    }
+
+    return  node_int;   
+}
+
 // complemento
-// diferença
+Node * complement(Node * root1, Node * root2)
+{
+    Node * node_comp = create_node(root1->value);
+    Node * child = root1->lchild;
+    while(child != NULL)
+    {
+        printf("finded %c: %d\n", child->value, !(find(root2, child->value) == NULL));
+        if(find(root2, child->value) == NULL)
+        {
+            Node * child_comp = complement(child, root2);
+            insert(node_comp, child_comp->value, node_comp->value);
+        }
+        child = child->rsibling;
+    }
+
+    return  node_comp;
+}
 
 int main()
 {
-    Node * root = create_node('A');
-    Node * root2 = create_node('A');
+    Node * root = create_node('B');
+    Node * root2 = create_node('B');
 
-    insert(root, 'B', 'A');
-    insert(root, 'C', 'A');
-    insert(root, 'D', 'A');
+    
     insert(root, 'F', 'B');
     insert(root, 'G', 'B');
+    insert(root, 'I', 'B');
 
-    insert(root2, 'B', 'A');
-    insert(root2, 'C', 'A');
-    insert(root2, 'D', 'A');
     insert(root2, 'F', 'B');
     insert(root2, 'G', 'B');
+    
 
-    printf("parent of C = %c\n", find_parent(root, 'C')->value);
+    //printf("parent of C = %c\n", find_parent(root, 'C')->value);
 
     printf("root1: \n");
     tprint(root);
@@ -237,10 +269,17 @@ int main()
     printf("\nis equal? %d\n", isequal(root, root2));
     printf("is subset? %d\n", subset(root2, root));
     printf("is subset or equal? %d\n", subset_equal(root2, root));
-    //printf("\nremoving C\n");
-    //remove_node(root, 'B');
 
+    //printf("join 2 trees...\n");
+    //union_trees(root, root2);
+    //printf("root1: \n");
     //tprint(root);
+
+    Node * comp = complement(root, root2);
+    tprint(comp);
+    printf("\n");
+    //Node * inter = intersect(root, root2);
+    //tprint(inter);
 
     return 0;
 }
