@@ -8,27 +8,34 @@ typedef struct snode{
 } SNode;
 
 // create
-SNode * create_stack()
+SNode * create_node()
 {
-    SNode * head = malloc(sizeof(SNode));
-    head->next = NULL;
-    return head;
+    SNode * node = malloc(sizeof(SNode));
+    node->next = NULL;
+    return node;
+}
+
+// empty
+int empty(SNode * stack)
+{
+    if(stack == NULL) return 1;
+    return 0;
 }
 
 // push
-void push(SNode * stack, int value)
+void push(SNode ** stack, int value)
 {
-    SNode * temp = malloc(sizeof(SNode));
+    SNode * temp = create_node();
     temp->value = value;
-    temp->next = stack->next;
-    stack->next = temp;
+    if(*stack != NULL) temp->next = *stack;
+    *stack = temp;
 }
 
 // pop
-void pop(SNode * stack)
+void pop(SNode ** stack)
 {
-    SNode * temp = stack->next; // first element
-    stack->next = temp->next; // stack to second element
+    SNode * temp = *stack;
+    *stack = (*stack)->next;
     printf("Pop last element: %d\n", temp->value);
     free(temp);
 }
@@ -36,7 +43,9 @@ void pop(SNode * stack)
 // print
 void sprint(SNode * stack)
 {
-    SNode * temp = stack->next;
+    if(empty(stack)) return (void) printf("empty stack");
+
+    SNode * temp = stack;
     printf("(");
     while(temp != NULL)
     {
@@ -50,8 +59,10 @@ void sprint(SNode * stack)
 // len
 int len(SNode * stack)
 {
+    if(empty(stack)) return 0;
+
     int count = 0;
-    SNode * temp = stack->next;
+    SNode * temp = stack;
     while(temp != NULL)
     {
         count++;
@@ -63,18 +74,13 @@ int len(SNode * stack)
 // top
 int top(SNode * stack)
 {
-    return stack->next->value;
+    return stack->value;
 }
 
-// empty
-int empty(SNode * stack)
-{
-    if(stack->next == NULL) return 1;
-    return 0;
-}
 
 // sort
 
+/*
 // union
 SNode * concatenate(SNode * stack1, SNode * stack2)
 {
@@ -87,7 +93,7 @@ SNode * concatenate(SNode * stack1, SNode * stack2)
 // invert
 SNode * invert(SNode * stack)
 {
-    SNode * inverse = create_stack();
+    SNode * inverse = create_node();
     SNode * temp = stack->next;
     while(temp != NULL)
     {
@@ -96,6 +102,7 @@ SNode * invert(SNode * stack)
     }
     return inverse;
 }
+*/
 
 // sfree
 void sfree(SNode * stack)
@@ -112,24 +119,22 @@ void sfree(SNode * stack)
 
 int main()
 {
-    SNode * stack = create_stack();
+    SNode * stack = NULL;
     int aux;
 
     while(scanf("%d", &aux) == 1)
     {
-        push(stack, aux);
+        push(&stack, aux);
     }
 
     printf("\nLen = %d\n", len(stack));
     sprint(stack);
-    //pop(stack);
-    pop(stack);
+    pop(&stack);
+    pop(&stack);
     sprint(stack);
     printf("top = %d\n", top(stack));
     printf("Is empty? %s\n", empty(stack) ? "Yes" : "No");
     sprint(stack);
-    printf("Inverse Stack: ");
-    sprint(invert(stack));
     sfree(stack);
     return 0;
 }
