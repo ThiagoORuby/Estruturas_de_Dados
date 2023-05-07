@@ -1,21 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sort.h"
-
-int print_arr(int * arr, int n)
-{
-    for(int i = 0; i < n; i++)
-        printf("%d%s", arr[i], (i < n - 1) ? " " : "\n");
-}
+#include "list.h"
+#include <time.h>
 
 
 int main()
 {
-    int n = 8;
-    int arr[] = {6, 5, 2, 8, 9, 1, 0, 7};
+    int n = 6;
+    int arr[] = {3, 2, 1, 5, 6, 7};
+
+    
+    List * list = NULL;
+    for(int i = 0; i < n; i++) append(&list, arr[i]);
 
     print_arr(arr, n);
-    insertion_sort(arr, n);
+    //lprint(&list);
+
+    selection_sort2(arr, n);
+    //List * sorted = merge_sort(&list);
     print_arr(arr, n);
+    //lprint(&sorted);
+    lfree(&list);
     return 0;
 }
