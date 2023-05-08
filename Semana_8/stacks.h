@@ -19,5 +19,6 @@ Stack * pops(Stacks ** stacks);
 Stack * tops(Stacks ** stacks);
 
 void print_stacks(Stacks ** stacks);
+void print_stacks_str(Stacks ** stacks);
 
 #endif // STACKS_H

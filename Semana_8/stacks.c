@@ -55,3 +55,14 @@ void print_stacks(Stacks ** stacks)
         temp = temp->next;
     }
 }
+
+void print_stacks_str(Stacks ** stacks)
+{
+    Stacks * temp = *stacks;
+
+    while(temp != NULL)
+    {
+        print_stack_str(&(temp->stack));
+        temp = temp->next;
+    }
+}
