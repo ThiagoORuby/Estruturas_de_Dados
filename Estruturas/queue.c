@@ -5,130 +5,98 @@
 typedef struct qnode{
     int value;
     struct qnode * next;
-    struct qnode * prev;
 } QNode;
 
-// create
-QNode ** create_queue()
+typedef struct queue{
+    QNode * front;
+    QNode * back;
+} Queue;
+
+QNode * create_node()
 {
-    QNode ** queue = malloc(sizeof(QNode *)*2);
-
-    for(int i = 0; i < 2; i++) queue[i] = malloc(sizeof(QNode));
-
-    queue[0]->next = queue[1];
-    queue[1]->prev = queue[0];
-    return queue;
+    QNode * node = malloc(sizeof(QNode));
+    node->next = NULL;
+    return node;
 }
 
-// empty
-int empty(QNode ** queue)
+int empty(Queue ** queue)
 {
-    if(queue[0]->next == queue[1]) return 1;
+    if((*queue) == NULL) return 1;
     return 0;
 }
 
-// push
-void push(QNode ** queue, int value)
+void push(Queue ** queue, int value)
 {
-    QNode * new = malloc(sizeof(QNode));
+    QNode * new = create_node();
     new->value = value;
+
     if(empty(queue))
     {
-        printf("valor add = %d\n", value);
-        queue[0]->next = new;
-        queue[1]->prev = new;
-        new->next = queue[1];
+        *queue = malloc(sizeof(Queue));
+        (*queue)->front = new;
+        (*queue)->back = new;
     }
     else
     {
-        QNode * temp = queue[1]->prev;
-        temp->next = new;
-        new->next = queue[1];
-        queue[1]->prev = new;
+        (*queue)->back->next = new;
+        (*queue)->back = new;
     }
 }
 
-// pop
-void pop(QNode ** queue)
+int pop(Queue ** queue)
 {
-    QNode * temp = queue[0]->next;
-    queue[0]->next = temp->next;
-    printf("Pop first element: %d\n",  temp->value);
+    if(empty(queue)) return -1;
+
+    QNode * temp = (*queue)->front;
+    (*queue)->front = temp->next;
+    int value = temp->value;
     free(temp);
+    return value;
 }
 
-
-// len
-int len(QNode ** queue)
+int front(Queue ** queue)
 {
-    int count = 0;
-    QNode * temp = queue[0]->next;
-    while(temp != queue[1])
+    return (*queue)->front->value;
+}
+
+int back(Queue ** queue)
+{
+    return (*queue)->back->value;
+}
+
+void print_queue(Queue ** queue)
+{
+    QNode * temp = (*queue)->front;
+
+    printf("| ");
+    while(temp != NULL)
     {
-        count++;
+        printf("%d ", temp->value);
         temp = temp->next;
     }
-    return count;
-}
-
-// print
-void qprint(QNode ** queue)
-{
-    QNode * temp = queue[0]->next;
-    printf("[");
-    while(temp != queue[1])
-    {
-        printf("%d", temp->value);
-        temp = temp->next;
-        if(temp != queue[1]) printf(", ");
-    }
-    printf("]\n");
-}
-
-// front
-int front(QNode ** queue)
-{
-    return queue[0]->next->value;
-}
-
-// back
-int back(QNode ** queue)
-{
-    return queue[1]->prev->value;
-}
-
-// qfree
-void qfree(QNode ** queue)
-{
-    int count = 0;
-    QNode * temp = queue[0];
-    while(temp != queue[1])
-    {
-        QNode * aux = temp;
-        temp = temp->next;
-        free(temp);
-    }
-    free(queue[1]);
+    printf("|\n");
 }
 
 int main()
 {
-    QNode ** queue = create_queue();
-    int aux;
+    int arr[6] = {3, 4, 2, 5, 1, 5};
+    Queue * queue = NULL;
 
-    while(scanf("%d", &aux) == 1)
+    for(int i = 0; i < 6; i++)
     {
-        push(queue, aux);
+        push(&queue, arr[i]);
     }
 
-    printf("\nLen = %d\n", len(queue));
-    qprint(queue);
-    pop(queue);
-    pop(queue);
-    qprint(queue);
-    printf("Front = %d\n", front(queue));
-    printf("Back = %d\n", back(queue));
-    printf("Is empty? %s\n", empty(queue) ? "Yes" : "No");
+    print_queue(&queue);
+    printf("front: %d\n", front(&queue));
+    printf("back: %d\n", back(&queue));
+    printf("pop: %d\n", pop(&queue));
+    printf("pop: %d\n", pop(&queue));
+    push(&queue, 8);
+    push(&queue, 11);
+    printf("front: %d\n", front(&queue));
+    printf("back: %d\n", back(&queue));
+    print_queue(&queue);
 
     return 0;
 }
