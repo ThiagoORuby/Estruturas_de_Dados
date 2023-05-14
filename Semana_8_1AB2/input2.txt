@@ -1,0 +1,27 @@
+5 6
+/Arthur's Eyes,The New Kid on the Block\
+/Purple Green and Yellow,The Salamander Room,Silly Sally,Sheila Rae the Brave,Sea Squares\
+/The Story of Babar : the Little,Harold and the Purple Crayon,David Copperfield,Ming Lo Moves the Mountain,Owl Moon\
+/Watership Down,The Little House,Ming Lo Moves the Mountain,Night\
+_
+/Code Talker,Bat Jamboree\
+/Jesse Bear What Will You Wear?,Have You Seen My Cat?,The Spy Who Came In from the Cold,The Gardener\
+/In the Tall Tall Grass,Mice Squeak We Speak,Six-Dinner Sid,Charlotte's Web,King Oedipus\
+/The Little Red Hen,e\
+_
+/Frindle,The Golly Sisters Go West\
+/The Biggest Bear,This Is the House that Jack\
+/Charlotte's Web,My Diary from Here to There ,Mr. Rabbit and the Lovely Present\
+_
+/Martha Speaks,The Littles\
+/Amazing Grace,Stone Fox\
+/Too Much Noise,My Father's Dragon\
+/Noisy Nora,Bringing the Rain to Kapiti Plain,Around the World in Eighty Days,Old Black Fly\
+/Flat Stanley: His Original Adventure,Museum ABC\
+_
+/Alphabears: An ABC Book\
+/Noisy Nora,The Hundred Dresses,Cinderella,Liang and the Magic Paintbrush,My Father's Dragon\
+/The Snow Walker,Green Eggs and Ham,Lord of the Flies,Blueberries for Sal\
+/The New Alphabet of Animals\
+/My Very First Book of Words,One Hundred Hungry Ants,Silly Sally\
+_
